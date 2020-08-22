@@ -3,7 +3,7 @@ import random
 width = 1000
 height = 900
 win = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Trash Heroes")
+pygame.display.set_caption("Cool Math Game")
 pygame.init()
 
 
@@ -152,7 +152,17 @@ class Game:
                                         (255, 255, 255), width/2, 550)
         self.game_title_label = Label("Cool Math Game", 40, (0, 0, 0),
                                       (255, 255, 255), width/2, 150)
-        self.stage = 0
+        self.choose_mode_label = Label("Multiplication", 25, (0, 0, 0),
+                                       (255, 255, 255), 3(width/5), 150)
+        self.add_label = Label("Addition", 25, (0, 0, 0),
+                               (255, 255, 255), width/5, 550)
+        self.subtract_label = Label("Subtraction", 25, (0, 0, 0),
+                                    (255, 255, 255), 2*(width/5), 550)
+        self.multiply_label = Label("Multiplication", 25, (0, 0, 0),
+                                    (255, 255, 255), 3*(width/5), 550)
+        self.division_label = Label("Division", 25, (0, 0, 0),
+                                    (255, 255, 255), 4*(width/5), 550)
+        self.stage = "start"
 
         for i in range(5):
             self.circlelist.append(Circle())
@@ -193,12 +203,12 @@ class Game:
         self.mousenotpressed = True
 
     def drawgame(self):
-        if self.stage == 0:
+        if self.stage == "start":
             self.game_title_label.draw(win)
             self.instructions_label.draw(win)
             self.play_label.draw(win)
 
-        if self.stage == 1:
+        if self.stage == "game":
             for circle in self.circlelist:
                 circle.draw()
             self.qlabel.draw(win)
@@ -219,7 +229,23 @@ class Game:
                     self.run = False
             self.x, self.y = pygame.mouse.get_pos()
 
-            if self.stage == 1:
+            if self.stage == "start":
+                pygame.event.get()
+                if pygame.mouse.get_pressed() == (0, 0, 0):
+                    self.mousenotpressed = True
+                if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
+                    self.mousenotpressed = False
+                    if self.play_label.in_rect:
+                        self.stage = "choose mode"
+                    if self.instructions_label.in_rect:
+                        self.stage = "instructions"
+                elif pygame.mouse.get_pressed() == (1, 0, 0):
+                    self.mousenotpressed = False
+                self.play_label.checkcursor(self.x, self.y, (128, 128, 128))
+                self.instructions_label.checkcursor(
+                    self.x, self.y, (128, 128, 128))
+
+            if self.stage == "game":
                 pygame.event.get()
                 if pygame.mouse.get_pressed() == (0, 0, 0):
                     self.mousenotpressed = True
