@@ -51,6 +51,29 @@ class Label:
             self.text, True, self.color, self.bg_color)
 
 
+class Math():
+    def __init__(self):
+        self.num1 = random.randrange(11)
+        self.num2 = random.randrange(11)
+        self.question = ""
+        self.answer = ""
+        self.answerList = []
+
+    def addition(self):
+        self.num1 = random.randrange(11)
+        self.num2 = random.randrange(11)
+        self.answerList = []
+        self.question = "what is " + str(self.num1) + " + "+str(self.num2)+"?"
+        self.answer = self.num1+self.num2
+        self.answerList.append(self.answer)
+        for i in range(5):
+            fakeAnswer = random.randrange(21)
+            while fakeAnswer in self.answerList:
+                fakeAnswer = random.randrange(21)
+            self.answerList.append(fakeAnswer)
+        return self.question, self.answer, self.answerList
+
+
 class Circle:
     def __init__(self):
         self.radius = 50
@@ -77,6 +100,8 @@ class Game:
         self.circlelist = []
         self.bg_color = (255, 255, 255)
         self.tooclose = False
+        self.math = Math()
+        self.question, self.answer, self.answerList = self.math.addition()
         for i in range(4):
             self.circlelist.append(Circle())
 
