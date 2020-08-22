@@ -16,7 +16,7 @@ class math():
         self.answer = ""
         self.answerList = []
 
-    def add(self):
+    def addition(self):
         self.num1 = random.randrange(11)
         self.num2 = random.randrange(11)
         self.answerList = []
@@ -65,7 +65,8 @@ class math():
         return self.question, self.answer, self.answerList
 
     def anyMathQuestion(self):
-        questionType = [self.add(), self.multi(), self.sub()]
+        questionType = [self.addition(), self.multiplication(),
+                        self.subtraction()]
         return questionType[random.randrange(3)]
 
 
