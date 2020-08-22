@@ -3,7 +3,7 @@ import random
 width = 1000
 height = 900
 win = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Trash Heroes")
+pygame.display.set_caption("Cool Math Game")
 pygame.init()
 
 
@@ -73,11 +73,78 @@ class Math():
             self.answerList.append(fakeAnswer)
         return self.question, self.answer, self.answerList
 
+    def multiplication(self):
+        self.num1 = random.randrange(11)
+        self.num2 = random.randrange(11)
+        self.answerList = []
+        self.question = "what is " + str(self.num1) + " * "+str(self.num2)+"?"
+        self.answer = self.num1*self.num2
+        self.answerList.append(self.answer)
+        for i in range(5):
+            fakeAnswer = random.randrange(100)
+            while fakeAnswer in self.answerList:
+                fakeAnswer = random.randrange(100)
+            self.answerList.append(fakeAnswer)
+        return self.question, self.answer, self.answerList
+
+    def subtraction(self):
+        self.num1 = random.randrange(11)
+        self.num2 = random.randrange(11)
+        self.answerList = []
+        if self.num1 > self.num2:
+            self.answer = self.num1 - self.num2
+            self.question = "what is " + \
+                str(self.num1) + " - "+str(self.num2)+"?"
+        else:
+            self.answer = self.num2 - self.num1
+            self.question = "what is " + \
+                str(self.num2) + " - "+str(self.num1)+"?"
+        self.answerList.append(self.answer)
+        for i in range(5):
+            fakeAnswer = random.randrange(11)
+            while fakeAnswer in self.answerList:
+                fakeAnswer = random.randrange(11)
+            self.answerList.append(fakeAnswer)
+        return self.question, self.answer, self.answerList
+
+    def division(self):
+        self.num1 = random.randrange(10, 100)
+        self.num2 = random.randrange(1, 11)
+        self.answerList = []
+        while self.num1 % self.num2 != 0:
+            self.num1 = random.randrange(10, 100)
+            self.num2 = random.randrange(1, 11)
+        self.answer = int(self.num1/self.num2)
+        self.question = "what is " + str(self.num1) + " / "+str(self.num2)+"?"
+        self.answerList.append(self.answer)
+        for i in range(5):
+            fakeAnswer = random.randrange(100)
+            while fakeAnswer in self.answerList:
+                fakeAnswer = random.randrange(100)
+            self.answerList.append(fakeAnswer)
+        return self.question, self.answer, self.answerList
+
+    def get_question(self, mode):
+        if mode == 'addition':
+            question = self.addition()
+        if mode == 'subtraction':
+            question = self.subtraction()
+        if mode == 'multiplication':
+            question = self.multiplication()
+        if mode == 'division':
+            question = self.division()
+        return question
+
+    def anyMathQuestion(self):
+        questionType = [self.addition(), self.multiplication(),
+                        self.subtraction()]
+        return questionType[random.randrange(3)]
+
 
 class Circle:
     def __init__(self):
         self.radius = 50
-        self.color = (255, 0, 0)
+        self.color = (23, 230, 216)
         self.visible = True
         self.x = random.randrange(50, width-50)
         self.y = random.randrange(150, height-50)
@@ -101,12 +168,24 @@ class Game:
         self.bg_color = (255, 255, 255)
         self.tooclose = False
         self.math = Math()
-        self.question, self.answer, self.answerList = self.math.addition()
-        self.qlabel = Label(self.question, 25, (0, 0, 0),
-                            (255, 255, 255), width/2, 25)
         self.points = 0
-        self.pointsLabel = Label("Points: "+str(self.points), 25, (0, 0, 0),
-                                 (255, 255, 255), width/2, 50)
+        self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
+                                  (255, 255, 255), width*0.9, 50)
+        self.play_label = Label("Play Game", 25, (0, 0, 0),
+                                (255, 255, 255), width/2, 650)
+        self.game_title_label = Label("Cool Math Game", 40, (0, 0, 0),
+                                      (255, 255, 255), width/2, 150)
+        self.choose_mode_label = Label("Choose Mode", 40, (0, 0, 0),
+                                       (255, 255, 255), width/2, 150)
+        self.add_label = Label("Addition", 25, (0, 0, 0),
+                               (255, 255, 255), width/5, 550)
+        self.subtract_label = Label("Subtraction", 25, (0, 0, 0),
+                                    (255, 255, 255), 2*(width/5), 550)
+        self.multiply_label = Label("Multiplication", 25, (0, 0, 0),
+                                    (255, 255, 255), 3*(width/5), 550)
+        self.divide_label = Label("Division", 25, (0, 0, 0),
+                                  (255, 255, 255), 4*(width/5), 550)
+        self.stage = "start"
 
         for i in range(5):
             self.circlelist.append(Circle())
@@ -147,18 +226,27 @@ class Game:
         self.mousenotpressed = True
 
     def drawgame(self):
-        for circle in self.circlelist:
-            circle.draw()
-        self.qlabel.draw(win)
-        for label in self.answerLabels:
-            label.draw(win)
-        self.pointsLabel.draw(win)
+        if self.stage == "start":
+            self.game_title_label.draw(win)
+            self.play_label.draw(win)
+
+        if self.stage == "choose mode":
+            self.choose_mode_label.draw(win)
+            self.add_label.draw(win)
+            self.subtract_label.draw(win)
+            self.multiply_label.draw(win)
+            self.divide_label.draw(win)
+
+        if self.stage == "game":
+            for circle in self.circlelist:
+                circle.draw()
+            self.qlabel.draw(win)
+            for label in self.answerLabels:
+                label.draw(win)
+            self.points_label.draw(win)
 
     def rungame(self):
         self.checkcircledistance()
-        for i in range(len(self.circlelist)):
-            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                255, 0, 0), self.circlelist[i].x, self.circlelist[i].y))
         while self.run:
             win.fill(self.bg_color)
             pygame.time.delay(10)
@@ -166,35 +254,108 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.run = False
             self.x, self.y = pygame.mouse.get_pos()
-            pygame.event.get()
-            if pygame.mouse.get_pressed() == (0, 0, 0):
-                self.mousenotpressed = True
-            if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
-                for circle in self.circlelist:
-                    self.xdiff = abs(self.x-circle.x)
-                    self.ydiff = abs(self.y-circle.y)
-                    if (self.xdiff**2+self.ydiff**2)**0.5 < 50:
-                        if circle == self.circlelist[0]:
-                            self.points += 1
-                        else:
-                            self.points -= 1
-                        for circle in self.circlelist:
-                            circle.changepos()
-                            self.checkcircledistance()
-                        self.math = Math()
-                        self.question, self.answer, self.answerList = self.math.addition()
-                        self.pointsLabel = Label("Points: "+str(self.points), 25, (0, 0, 0),
-                                                 (255, 255, 255), width/2, 50)
-                        self.qlabel = Label(self.question, 25, (0, 0, 0),
+
+            if self.stage == "start":
+                pygame.event.get()
+                if pygame.mouse.get_pressed() == (0, 0, 0):
+                    self.mousenotpressed = True
+                if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
+                    self.mousenotpressed = False
+                    if self.play_label.in_rect:
+                        self.stage = "choose mode"
+
+                elif pygame.mouse.get_pressed() == (1, 0, 0):
+                    self.mousenotpressed = False
+                self.play_label.checkcursor(self.x, self.y, (128, 128, 128))
+
+            if self.stage == "choose mode":
+                pygame.event.get()
+                if pygame.mouse.get_pressed() == (0, 0, 0):
+                    self.mousenotpressed = True
+                if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
+                    self.mousenotpressed = False
+                    if self.add_label.in_rect:
+                        self.mode = "addition"
+                        self.question, self.answer, self.answerList = self.math.get_question(
+                            self.mode)
+                        self.qlabel = Label(self.question, 30, (0, 0, 0),
                                             (255, 255, 255), width/2, 25)
-                        self.answerLabels = []
                         for i in range(len(self.circlelist)):
                             self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                                255, 0, 0), self.circlelist[i].x, self.circlelist[i].y))
-
+                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+                        self.stage = "game"
+                    if self.subtract_label.in_rect:
+                        self.mode = "subtraction"
+                        self.question, self.answer, self.answerList = self.math.get_question(
+                            self.mode)
+                        self.qlabel = Label(self.question, 30, (0, 0, 0),
+                                            (255, 255, 255), width/2, 25)
+                        for i in range(len(self.circlelist)):
+                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+                        self.stage = "game"
+                    if self.multiply_label.in_rect:
+                        self.mode = "multiplication"
+                        self.question, self.answer, self.answerList = self.math.get_question(
+                            self.mode)
+                        self.qlabel = Label(self.question, 30, (0, 0, 0),
+                                            (255, 255, 255), width/2, 25)
+                        for i in range(len(self.circlelist)):
+                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+                        self.stage = "game"
+                    if self.divide_label.in_rect:
+                        self.mode = "division"
+                        self.question, self.answer, self.answerList = self.math.get_question(
+                            self.mode)
+                        self.qlabel = Label(self.question, 30, (0, 0, 0),
+                                            (255, 255, 255), width/2, 25)
+                        for i in range(len(self.circlelist)):
+                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+                        self.stage = "game"
+                elif pygame.mouse.get_pressed() == (1, 0, 0):
                     self.mousenotpressed = False
-            elif pygame.mouse.get_pressed() == (1, 0, 0):
-                self.mousenotpressed = False
+                self.add_label.checkcursor(self.x, self.y, (128, 128, 128))
+                self.subtract_label.checkcursor(
+                    self.x, self.y, (128, 128, 128))
+                self.multiply_label.checkcursor(
+                    self.x, self.y, (128, 128, 128))
+                self.divide_label.checkcursor(
+                    self.x, self.y, (128, 128, 128))
+
+            if self.stage == "game":
+                pygame.event.get()
+                if pygame.mouse.get_pressed() == (0, 0, 0):
+                    self.mousenotpressed = True
+                if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
+                    for circle in self.circlelist:
+                        self.xdiff = abs(self.x-circle.x)
+                        self.ydiff = abs(self.y-circle.y)
+                        if (self.xdiff**2+self.ydiff**2)**0.5 < 50:
+                            if circle == self.circlelist[0]:
+                                self.points += 1
+                            else:
+                                self.points -= 1
+                            for circle in self.circlelist:
+                                circle.changepos()
+                                self.checkcircledistance()
+                            self.math = Math()
+                            self.question, self.answer, self.answerList = self.math.get_question(
+                                self.mode)
+                            self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
+                                                      (255, 255, 255), width*0.9, 50)
+                            self.qlabel = Label(self.question, 30, (0, 0, 0),
+                                                (255, 255, 255), width/2, 25)
+                            self.answerLabels = []
+                            for i in range(len(self.circlelist)):
+                                self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                                    23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+
+                        self.mousenotpressed = False
+                elif pygame.mouse.get_pressed() == (1, 0, 0):
+                    self.mousenotpressed = False
+
             self.drawgame()
 
             pygame.display.update()

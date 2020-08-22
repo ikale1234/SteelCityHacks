@@ -83,8 +83,8 @@ class math():
 
     def anyMathQuestion(self):
         questionType = [self.addition(), self.multiplication(),
-                        self.subtraction(), self.division()]
-        return questionType[random.randrange(4)]
+                        self.subtraction()]
+        return questionType[random.randrange(3)]
 
 
 font1 = pygame.font.SysFont("comicsans", 80, True)
