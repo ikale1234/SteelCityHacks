@@ -66,11 +66,11 @@ class math():
 
     def division(self):
         self.num1 = random.randrange(10, 100)
-        self.num2 = random.randrange(1, 11)
+        self.num2 = random.randrange(2, 11)
         self.answerList = []
         while self.num1 % self.num2 != 0:
             self.num1 = random.randrange(10, 100)
-            self.num2 = random.randrange(1, 11)
+            self.num2 = random.randrange(2, 11)
         self.answer = int(self.num1/self.num2)
         self.question = "what is " + str(self.num1) + " / "+str(self.num2)+"?"
         self.answerList.append(self.answer)
