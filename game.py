@@ -1,5 +1,7 @@
 import pygame
 import random
+import time
+import threading
 width = 1000
 height = 900
 win = pygame.display.set_mode((width, height))
@@ -170,7 +172,7 @@ class Game:
         self.math = Math()
         self.points = 0
         self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
-                                  (255, 255, 255), width*0.9, 50)
+                                  (255, 255, 255), width*0.9, 25)
         self.play_label = Label("Play Game", 25, (0, 0, 0),
                                 (255, 255, 255), width/2, 650)
         self.game_title_label = Label("Cool Math Game", 40, (0, 0, 0),
@@ -185,8 +187,13 @@ class Game:
                                     (255, 255, 255), 3*(width/5), 550)
         self.divide_label = Label("Division", 25, (0, 0, 0),
                                   (255, 255, 255), 4*(width/5), 550)
+        self.end_label = Label("You ended up with " + str(self.points) + " points.", 35, (0, 0, 0),
+                               (255, 255, 255), width/2, 150)
+        self.play_again_label = Label("Play Again", 25, (0, 0, 0),
+                                      (255, 255, 255), width/2, 650)
+        self.add1_label = Label("1 Digit Addition", 20, (0, 0, 0),
+                                (255, 255, 255), width/5, 550)
         self.stage = "start"
-
         for i in range(5):
             self.circlelist.append(Circle())
         self.answerLabels = []
@@ -201,7 +208,7 @@ class Game:
                 self.ybetween = abs(
                     self.circlelist[i].y - self.circlelist[j].y)
                 if i != j:
-                    if (self.xbetween**2+self.ybetween**2)**0.5 < 150:
+                    if (self.xbetween**2+self.ybetween**2)**0.5 < 200:
                         for k in range(len(self.circlelist)):
                             self.circlelist[k].changepos()
                         self.tooclose = True
@@ -217,7 +224,7 @@ class Game:
                     self.ybetween = abs(
                         self.circlelist[i].y - self.circlelist[j].y)
                     if i != j:
-                        if (self.xbetween**2+self.ybetween**2)**0.5 < 150:
+                        if (self.xbetween**2+self.ybetween**2)**0.5 < 200:
                             for k in range(len(self.circlelist)):
                                 self.circlelist[k].changepos()
                             self.tooclose = True
@@ -244,6 +251,16 @@ class Game:
             for label in self.answerLabels:
                 label.draw(win)
             self.points_label.draw(win)
+            self.timer_label.draw(win)
+
+        if self.stage == "end":
+            self.end_label.draw(win)
+            self.play_again_label.draw(win)
+
+    def set_timer(self):
+        self.start_time = pygame.time.get_ticks()
+        self.timer_label = Label("Time Left: " + str(int(30)), 25, (0, 0, 0),
+                                 (255, 255, 255), width*0.1, 25)
 
     def rungame(self):
         self.checkcircledistance()
@@ -275,6 +292,7 @@ class Game:
                 if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
                     self.mousenotpressed = False
                     if self.add_label.in_rect:
+
                         self.mode = "addition"
                         self.question, self.answer, self.answerList = self.math.get_question(
                             self.mode)
@@ -284,7 +302,9 @@ class Game:
                             self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                 23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
                         self.stage = "game"
+                        self.set_timer()
                     if self.subtract_label.in_rect:
+
                         self.mode = "subtraction"
                         self.question, self.answer, self.answerList = self.math.get_question(
                             self.mode)
@@ -294,7 +314,9 @@ class Game:
                             self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                 23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
                         self.stage = "game"
+                        self.set_timer()
                     if self.multiply_label.in_rect:
+
                         self.mode = "multiplication"
                         self.question, self.answer, self.answerList = self.math.get_question(
                             self.mode)
@@ -304,7 +326,9 @@ class Game:
                             self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                 23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
                         self.stage = "game"
+                        self.set_timer()
                     if self.divide_label.in_rect:
+
                         self.mode = "division"
                         self.question, self.answer, self.answerList = self.math.get_question(
                             self.mode)
@@ -314,6 +338,7 @@ class Game:
                             self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                 23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
                         self.stage = "game"
+                        self.set_timer()
                 elif pygame.mouse.get_pressed() == (1, 0, 0):
                     self.mousenotpressed = False
                 self.add_label.checkcursor(self.x, self.y, (128, 128, 128))
@@ -325,10 +350,20 @@ class Game:
                     self.x, self.y, (128, 128, 128))
 
             if self.stage == "game":
+                self.time_now = pygame.time.get_ticks()
+                self.time_diff = (self.time_now-self.start_time)/1000
+                self.timer_label = Label("Time Left: " + str(int(30 - self.time_diff)), 25, (0, 0, 0),
+                                         (255, 255, 255), width*0.1, 25)
+                if 30 - self.time_diff <= 0:
+                    self.stage = "end"
+                    self.end_label = Label("You ended up with " + str(self.points) + " points.", 35, (0, 0, 0),
+                                           (255, 255, 255), width/2, 150)
+
                 pygame.event.get()
                 if pygame.mouse.get_pressed() == (0, 0, 0):
                     self.mousenotpressed = True
                 if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
+                    self.mousenotpressed = False
                     for circle in self.circlelist:
                         self.xdiff = abs(self.x-circle.x)
                         self.ydiff = abs(self.y-circle.y)
@@ -339,12 +374,12 @@ class Game:
                                 self.points -= 1
                             for circle in self.circlelist:
                                 circle.changepos()
-                                self.checkcircledistance()
+                            self.checkcircledistance()
                             self.math = Math()
                             self.question, self.answer, self.answerList = self.math.get_question(
                                 self.mode)
                             self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
-                                                      (255, 255, 255), width*0.9, 50)
+                                                      (255, 255, 255), width*0.9, 25)
                             self.qlabel = Label(self.question, 30, (0, 0, 0),
                                                 (255, 255, 255), width/2, 25)
                             self.answerLabels = []
@@ -352,9 +387,31 @@ class Game:
                                 self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                     23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
 
-                        self.mousenotpressed = False
                 elif pygame.mouse.get_pressed() == (1, 0, 0):
                     self.mousenotpressed = False
+
+            if self.stage == "end":
+                pygame.event.get()
+                if pygame.mouse.get_pressed() == (0, 0, 0):
+                    self.mousenotpressed = True
+                if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
+                    self.mousenotpressed = False
+                    if self.play_again_label.in_rect:
+                        self.stage = "choose mode"
+                        self.points = 0
+                        for circle in self.circlelist:
+                            circle.changepos()
+                        self.checkcircledistance()
+                        self.answerLabels = []
+                        self.play_again_label.in_rect = False
+                        self.add_label.in_rect = False
+                        self.subtract_label.in_rect = False
+                        self.multiply_label.in_rect = False
+                        self.divide_label.in_rect = False
+                elif pygame.mouse.get_pressed() == (1, 0, 0):
+                    self.mousenotpressed = False
+                self.play_again_label.checkcursor(
+                    self.x, self.y, (128, 128, 128))
 
             self.drawgame()
 
