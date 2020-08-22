@@ -101,6 +101,7 @@ class math():
             return self._addition3()
         if difficulty == 4:
             return self._addition4()
+        return self._addition1()
 
     def _multiplication1(self):
         multiplediff = [1, 10]
@@ -171,6 +172,7 @@ class math():
             return self._multiplication3()
         if difficulty == 4:
             return self._multiplication4()
+        return self._multiplication1()
 
     def _subtraction1(self):
         self.answer = random.randrange(10)
@@ -271,6 +273,7 @@ class math():
             return self._subtraction3()
         if difficulty == 4:
             return self._subtraction4()
+        return self._subtraction1()
 
     def _division1(self):
         divideBy = [1, 10]
@@ -349,6 +352,7 @@ class math():
             return self._division3()
         if difficulty == 4:
             return self._division4()
+        return self._division1()
 
 
 font1 = pygame.font.SysFont("comicsans", 80, True)
