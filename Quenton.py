@@ -16,7 +16,7 @@ class math():
         self.answer = ""
         self.answerList = []
 
-    def add(self):
+    def addition(self):
         self.num1 = random.randrange(11)
         self.num2 = random.randrange(11)
         self.answerList = []
@@ -64,9 +64,27 @@ class math():
             self.answerList.append(fakeAnswer)
         return self.question, self.answer, self.answerList
 
+    def division(self):
+        self.num1 = random.randrange(10, 100)
+        self.num2 = random.randrange(1, 11)
+        self.answerList = []
+        while self.num1 % self.num2 != 0:
+            self.num1 = random.randrange(10, 100)
+            self.num2 = random.randrange(1, 11)
+        self.answer = int(self.num1/self.num2)
+        self.question = "what is " + str(self.num1) + " / "+str(self.num2)+"?"
+        self.answerList.append(self.answer)
+        for i in range(5):
+            fakeAnswer = random.randrange(100)
+            while fakeAnswer in self.answerList:
+                fakeAnswer = random.randrange(100)
+            self.answerList.append(fakeAnswer)
+        return self.question, self.answer, self.answerList
+
     def anyMathQuestion(self):
-        questionType = [self.add(), self.multi(), self.sub()]
-        return questionType[random.randrange(3)]
+        questionType = [self.addition(), self.multiplication(),
+                        self.subtraction(), self.division()]
+        return questionType[random.randrange(4)]
 
 
 font1 = pygame.font.SysFont("comicsans", 80, True)
