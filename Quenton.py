@@ -30,7 +30,7 @@ class math():
             self.answerList.append(fakeAnswer)
         return self.question, self.answer, self.answerList
 
-    def multi(self):
+    def multiplication(self):
         self.num1 = random.randrange(11)
         self.num2 = random.randrange(11)
         self.answerList = []
@@ -44,7 +44,7 @@ class math():
             self.answerList.append(fakeAnswer)
         return self.question, self.answer, self.answerList
 
-    def sub(self):
+    def subtraction(self):
         self.num1 = random.randrange(11)
         self.num2 = random.randrange(11)
         self.answerList = []
