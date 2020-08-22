@@ -1,166 +1,14 @@
 import pygame
 import random
 import time
-import threading
+from label_class import Label
+from math_class import Math
+from circle_class import Circle
 width = 1000
 height = 900
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Cool Math Game")
 pygame.init()
-
-
-class Label:
-    def __init__(self, text, size, color, bg_color, x, y):
-        self.text = text
-        self.size = size
-        self.font = pygame.font.SysFont('arial', size)
-        self.color = color
-        self.width, self.height = self.font.size(self.text)
-        self.bg_color = bg_color
-        self.label = self.font.render(self.text, True, color, self.bg_color)
-        self.rect = self.label.get_rect()
-        self.x = x
-        self.y = y
-        self.rect.center = (self.x, self.y)
-        self.in_rect = False
-
-    def draw(self, win):
-        win.blit(self.label, self.rect)
-
-    def checkcursor(self, x, y, color):
-        if x > self.x - self.width/2 and x < self.x + self.width/2:
-            if y > self.y - self.height/2 and y < self.y + self.height/2:
-                self.label = self.font.render(
-                    self.text, True, self.color, color)
-                self.in_rect = True
-            else:
-                self.label = self.font.render(
-                    self.text, True, self.color, self.bg_color)
-                self.in_rect = False
-        else:
-            self.label = self.font.render(
-                self.text, True, self.color, self.bg_color)
-            self.in_rect = False
-
-    def changetext(self, text):
-        self.label = self.font.render(text, True, self.color, self.bg_color)
-        self.rect = self.label.get_rect()
-        self.rect.center = (self.x, self.y)
-
-    def changecolor(self, color):
-        self.color = color
-        self.label = self.font.render(
-            self.text, True, self.color, self.bg_color)
-
-
-class Math():
-    def __init__(self):
-        self.num1 = random.randrange(11)
-        self.num2 = random.randrange(11)
-        self.question = ""
-        self.answer = ""
-        self.answerList = []
-
-    def addition(self):
-        self.num1 = random.randrange(11)
-        self.num2 = random.randrange(11)
-        self.answerList = []
-        self.question = "what is " + str(self.num1) + " + "+str(self.num2)+"?"
-        self.answer = self.num1+self.num2
-        self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(21)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(21)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
-
-    def multiplication(self):
-        self.num1 = random.randrange(11)
-        self.num2 = random.randrange(11)
-        self.answerList = []
-        self.question = "what is " + str(self.num1) + " * "+str(self.num2)+"?"
-        self.answer = self.num1*self.num2
-        self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
-
-    def subtraction(self):
-        self.num1 = random.randrange(11)
-        self.num2 = random.randrange(11)
-        self.answerList = []
-        if self.num1 > self.num2:
-            self.answer = self.num1 - self.num2
-            self.question = "what is " + \
-                str(self.num1) + " - "+str(self.num2)+"?"
-        else:
-            self.answer = self.num2 - self.num1
-            self.question = "what is " + \
-                str(self.num2) + " - "+str(self.num1)+"?"
-        self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(11)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(11)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
-
-    def division(self):
-        self.num1 = random.randrange(10, 100)
-        self.num2 = random.randrange(1, 11)
-        self.answerList = []
-        while self.num1 % self.num2 != 0:
-            self.num1 = random.randrange(10, 100)
-            self.num2 = random.randrange(1, 11)
-        self.answer = int(self.num1/self.num2)
-        self.question = "what is " + str(self.num1) + " / "+str(self.num2)+"?"
-        self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
-
-    def get_question(self, mode):
-        if mode == 'addition':
-            question = self.addition()
-        if mode == 'subtraction':
-            question = self.subtraction()
-        if mode == 'multiplication':
-            question = self.multiplication()
-        if mode == 'division':
-            question = self.division()
-        return question
-
-    def anyMathQuestion(self):
-        questionType = [self.addition(), self.multiplication(),
-                        self.subtraction()]
-        return questionType[random.randrange(3)]
-
-
-class Circle:
-    def __init__(self):
-        self.radius = 50
-        self.color = (23, 230, 216)
-        self.visible = True
-        self.x = random.randrange(50, width-50)
-        self.y = random.randrange(150, height-50)
-
-    def draw(self):
-        if self.visible:
-            pygame.draw.circle(win, self.color, (self.x, self.y), self.radius)
-
-    def changecolor(self, color):
-        self.color = color
-
-    def changepos(self):
-        self.x = random.randrange(50, width-50)
-        self.y = random.randrange(150, height-50)
 
 
 class Game:
@@ -191,46 +39,25 @@ class Game:
                                (255, 255, 255), width/2, 150)
         self.play_again_label = Label("Play Again", 25, (0, 0, 0),
                                       (255, 255, 255), width/2, 650)
-        self.add1_label = Label("1 Digit Addition", 20, (0, 0, 0),
-                                (255, 255, 255), width/5, 550)
+        # self.add1_label = Label("1 Digit Addition", 20, (0, 0, 0),
+        #                         (255, 255, 255), width/5, 550)
+        # self.add2_label = Label("1 Digit Addition witg", 20, (0, 0, 0),
+        #                         (255, 255, 255), width/5, 550)
+        # self.add3_label = Label("1 Digit Addition", 20, (0, 0, 0),
+        #                         (255, 255, 255), width/5, 550)
+        # self.add2_label = Label("1 Digit Addition", 20, (0, 0, 0),
+        #                         (255, 255, 255), width/5, 550)
         self.stage = "start"
         for i in range(5):
-            self.circlelist.append(Circle())
+            self.circlelist.append(Circle(width, height))
+        self.allcircles = Circle(width, height)
+        self.allcircles.changepos(self.circlelist)
+        self.allcircles.tp()
         self.answerLabels = []
-
-    def checkcircledistance(self):
-        for i in range(len(self.circlelist)):
-            if self.tooclose:
-                break
-            for j in range(len(self.circlelist)):
-                self.xbetween = abs(
-                    self.circlelist[i].x - self.circlelist[j].x)
-                self.ybetween = abs(
-                    self.circlelist[i].y - self.circlelist[j].y)
-                if i != j:
-                    if (self.xbetween**2+self.ybetween**2)**0.5 < 200:
-                        for k in range(len(self.circlelist)):
-                            self.circlelist[k].changepos()
-                        self.tooclose = True
-                        break
-        while self.tooclose:
-            self.tooclose = False
-            for i in range(len(self.circlelist)):
-                if self.tooclose:
-                    break
-                for j in range(len(self.circlelist)):
-                    self.xbetween = abs(
-                        self.circlelist[i].x - self.circlelist[j].x)
-                    self.ybetween = abs(
-                        self.circlelist[i].y - self.circlelist[j].y)
-                    if i != j:
-                        if (self.xbetween**2+self.ybetween**2)**0.5 < 200:
-                            for k in range(len(self.circlelist)):
-                                self.circlelist[k].changepos()
-                            self.tooclose = True
-                            break
-
         self.mousenotpressed = True
+        self.circlemove = False
+        self.circlesteps = 0
+        self.new_question = False
 
     def drawgame(self):
         if self.stage == "start":
@@ -246,7 +73,7 @@ class Game:
 
         if self.stage == "game":
             for circle in self.circlelist:
-                circle.draw()
+                circle.draw(win)
             self.qlabel.draw(win)
             for label in self.answerLabels:
                 label.draw(win)
@@ -263,7 +90,6 @@ class Game:
                                  (255, 255, 255), width*0.1, 25)
 
     def rungame(self):
-        self.checkcircledistance()
         while self.run:
             win.fill(self.bg_color)
             pygame.time.delay(10)
@@ -364,28 +190,52 @@ class Game:
                     self.mousenotpressed = True
                 if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
                     self.mousenotpressed = False
-                    for circle in self.circlelist:
-                        self.xdiff = abs(self.x-circle.x)
-                        self.ydiff = abs(self.y-circle.y)
+                    for i in range(len(self.circlelist)):
+                        self.xdiff = abs(self.x-self.circlelist[i].x)
+                        self.ydiff = abs(self.y-self.circlelist[i].y)
                         if (self.xdiff**2+self.ydiff**2)**0.5 < 50:
-                            if circle == self.circlelist[0]:
+                            if self.circlelist[i] == self.circlelist[0]:
                                 self.points += 1
+                                self.circlelist[i].changecolor((0, 255, 0))
+                                self.answerLabels[i] = Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                                    0, 255, 0), self.circlelist[i].x, self.circlelist[i].y)
+
                             else:
                                 self.points -= 1
-                            for circle in self.circlelist:
-                                circle.changepos()
-                            self.checkcircledistance()
-                            self.math = Math()
-                            self.question, self.answer, self.answerList = self.math.get_question(
-                                self.mode)
-                            self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
-                                                      (255, 255, 255), width*0.9, 25)
-                            self.qlabel = Label(self.question, 30, (0, 0, 0),
-                                                (255, 255, 255), width/2, 25)
-                            self.answerLabels = []
-                            for i in range(len(self.circlelist)):
-                                self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                                    23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+                                self.circlelist[i].changecolor((255, 0, 0))
+                                self.answerLabels[i] = Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                                    255, 0, 0), self.circlelist[i].x, self.circlelist[i].y)
+                                self.circlelist[0].changecolor((0, 255, 0))
+                                self.answerLabels[0] = Label(str(self.answerList[0]), 25, (0, 0, 0), (
+                                    0, 255, 0), self.circlelist[0].x, self.circlelist[0].y)
+                            self.allcircles.changepos(self.circlelist)
+                            self.circlemove = True
+
+                if self.circlemove:
+                    self.allcircles.slide(45)
+                    self.circlesteps += 1
+                    for i in range(len(self.answerLabels)):
+                        self.answerLabels[i].changepos(
+                            self.circlelist[i].x, self.circlelist[i].y)
+                    if self.circlesteps == 45:
+                        self.circlemove = False
+                        self.circlesteps = 0
+                        self.new_question = True
+                if self.new_question:
+                    for circle in self.circlelist:
+                        circle.changecolor((23, 230, 216))
+
+                    self.new_question = False
+                    self.question, self.answer, self.answerList = self.math.get_question(
+                        self.mode)
+                    self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
+                                              (255, 255, 255), width*0.9, 25)
+                    self.qlabel = Label(self.question, 30, (0, 0, 0),
+                                        (255, 255, 255), width/2, 25)
+                    self.answerLabels = []
+                    for i in range(len(self.circlelist)):
+                        self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                            23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
 
                 elif pygame.mouse.get_pressed() == (1, 0, 0):
                     self.mousenotpressed = False
@@ -399,9 +249,7 @@ class Game:
                     if self.play_again_label.in_rect:
                         self.stage = "choose mode"
                         self.points = 0
-                        for circle in self.circlelist:
-                            circle.changepos()
-                        self.checkcircledistance()
+                        self.allcircles.changepos(self.circlelist)
                         self.answerLabels = []
                         self.play_again_label.in_rect = False
                         self.add_label.in_rect = False
