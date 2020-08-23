@@ -105,6 +105,10 @@ class Game:
         self.mode = mode
         self.question, self.answer, self.answerList = self.math.get_question(
             self.mode, self.difficulty)
+        random.shuffle(self.answerList)
+        for i in range(len(self.answerList)):
+            if self.answerList[i] == self.answer:
+                self.index = i
         self.qlabel = Label(self.question, 30, (0, 0, 0),
                             (255, 255, 255), width/2, 25)
         for i in range(len(self.circlelist)):
@@ -192,7 +196,7 @@ class Game:
                         self.xdiff = abs(self.x-self.circlelist[i].x)
                         self.ydiff = abs(self.y-self.circlelist[i].y)
                         if (self.xdiff**2+self.ydiff**2)**0.5 < 50 and self.circlemove == False:
-                            if self.circlelist[i] == self.circlelist[0]:
+                            if self.circlelist[i] == self.circlelist[self.index]:
                                 self.points += 1
                                 self.circlelist[i].changecolor((0, 255, 0))
                                 self.answerLabels[i] = Label(str(self.answerList[i]), 25, (0, 0, 0), (
@@ -205,9 +209,10 @@ class Game:
                                 self.circlelist[i].changecolor((255, 0, 0))
                                 self.answerLabels[i] = Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                     255, 0, 0), self.circlelist[i].x, self.circlelist[i].y)
-                                self.circlelist[0].changecolor((0, 255, 0))
-                                self.answerLabels[0] = Label(str(self.answerList[0]), 25, (0, 0, 0), (
-                                    0, 255, 0), self.circlelist[0].x, self.circlelist[0].y)
+                                self.circlelist[self.index].changecolor(
+                                    (0, 255, 0))
+                                self.answerLabels[self.index] = Label(str(self.answerList[self.index]), 25, (0, 0, 0), (
+                                    0, 255, 0), self.circlelist[self.index].x, self.circlelist[self.index].y)
                                 self.wrongsound.play()
                             self.allcircles.changepos(self.circlelist)
                             self.circlemove = True
@@ -229,6 +234,11 @@ class Game:
                     self.new_question = False
                     self.question, self.answer, self.answerList = self.math.get_question(
                         self.mode, self.difficulty)
+                    random.shuffle(self.answerList)
+                    for i in range(len(self.answerList)):
+                        if self.answerList[i] == self.answer:
+                            self.index = i
+
                     self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
                                               (255, 255, 255), width*0.9, 25)
                     self.qlabel = Label(self.question, 30, (0, 0, 0),
