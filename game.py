@@ -7,7 +7,7 @@ from circle_class import Circle
 width = 1280
 height = 768
 win = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Cool Math Game")
+pygame.display.set_caption("Quick Maths")
 pygame.init()
 
 
@@ -25,7 +25,7 @@ class Game:
         self.points_label = Label("Points: "+str(self.points), 25, (0, 0, 0),
                                   (255, 255, 255), width*0.9, 25)
 
-        self.game_title_label = Label("Cool Math Game", 40, (0, 0, 0),
+        self.game_title_label = Label("Quick Maths", 40, (0, 0, 0),
                                       (255, 255, 255), width/2, 150)
         self.choose_mode_label = Label("Choose Mode", 40, (0, 0, 0),
                                        (255, 255, 255), width/2, 150)
