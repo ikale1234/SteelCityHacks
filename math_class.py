@@ -37,7 +37,7 @@ class Math():
             self.num2 = random.randrange(10)
             self.answer = self.num1+self.num2
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " + "+str(self.num2)
+        self.question = str(self.num1) + " + "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
@@ -51,7 +51,7 @@ class Math():
             self.num2 = random.randrange(10)
             self.answer = self.num1+self.num2
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " + "+str(self.num2)
+        self.question = str(self.num1) + " + "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
@@ -65,7 +65,7 @@ class Math():
         self.num1 = (numdigit1 * 10) + numdigit2
         self.num2 = self.answer - self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " + "+str(self.num2)
+        self.question = str(self.num1) + " + "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
@@ -79,7 +79,7 @@ class Math():
         self.num1 = (numdigit1 * 10) + numdigit2
         self.num2 = self.answer - self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " + "+str(self.num2)
+        self.question = str(self.num1) + " + "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
@@ -99,7 +99,7 @@ class Math():
         self.num2 = random.randrange(1, 13)
         self.num1 = multiplediff[random.randrange(2)]
         self.answerList = []
-        self.question = str(self.num1) + " x "+str(self.num2)
+        self.question = str(self.num1) + " x "+str(self.num2)+" = ?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
         self.answerList = self._pickRandomSolutions(self.answer)
@@ -110,7 +110,7 @@ class Math():
         self.num2 = random.randrange(1, 13)
         self.num1 = multiplediff[random.randrange(3)]
         self.answerList = []
-        self.question = str(self.num1) + " x "+str(self.num2)
+        self.question = str(self.num1) + " x "+str(self.num2)+" = ?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
         self.answerList = self._pickRandomSolutions(self.answer)
@@ -121,7 +121,7 @@ class Math():
         self.num2 = random.randrange(1, 13)
         self.num1 = multiplediff[random.randrange(4)]
         self.answerList = []
-        self.question = str(self.num1) + " x "+str(self.num2)
+        self.question = str(self.num1) + " x "+str(self.num2)+" = ?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
         self.answerList = self._pickRandomSolutions(self.answer)
@@ -132,7 +132,7 @@ class Math():
         self.num2 = random.randrange(1, 13)
         self.num1 = multiplediff[random.randrange(3)]
         self.answerList = []
-        self.question = str(self.num1) + " x "+str(self.num2)
+        self.question = str(self.num1) + " x "+str(self.num2)+" = ?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
         self.answerList = self._pickRandomSolutions(self.answer)
@@ -156,7 +156,7 @@ class Math():
         self.answerList = []
         print(self.num1, self.num2)
         if self.num1 > self.num2:
-            self.question = str(self.num1) + " - "+str(self.num2)
+            self.question = str(self.num1) + " - "+str(self.num2)+" = ?"
         else:
             self.question = "what is " + \
                 str(self.num2) + " - "+str(self.num1)+"?"
@@ -169,7 +169,7 @@ class Math():
         self.num2 = random.randrange(10)
         self.answerList = []
         if self.num1 > self.num2:
-            self.question = str(self.num1) + " - "+str(self.num2)
+            self.question = str(self.num1) + " - "+str(self.num2)+" = ?"
             self.answer = self.num1 - self.num2
         else:
             self.question = "what is " + \
@@ -190,7 +190,7 @@ class Math():
         self.answerList = []
         print(self.num1, self.num2)
         if self.num1 > self.num2:
-            self.question = str(self.num1) + " - "+str(self.num2)
+            self.question = str(self.num1) + " - "+str(self.num2)+" = ?"
         else:
             self.question = "what is " + \
                 str(self.num2) + " - "+str(self.num1)+"?"
@@ -211,7 +211,7 @@ class Math():
         self.answerList = []
         print(self.num1, self.num2)
         if self.num1 > self.num2:
-            self.question = str(self.num1) + " - "+str(self.num2)
+            self.question = str(self.num1) + " - "+str(self.num2)+" = ?"
         else:
             self.question = "what is " + \
                 str(self.num2) + " - "+str(self.num1)+"?"
@@ -239,7 +239,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)
+        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
@@ -252,7 +252,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)
+        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
@@ -265,7 +265,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)
+        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
@@ -278,7 +278,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)
+        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
