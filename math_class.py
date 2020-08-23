@@ -239,7 +239,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
+        self.question = str(self.num2) + " / "+str(self.num1)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
@@ -252,7 +252,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
+        self.question = str(self.num2) + " / "+str(self.num1)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
@@ -265,7 +265,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
+        self.question = str(self.num2) + " / "+str(self.num1)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
@@ -278,7 +278,7 @@ class Math():
         self.num2 = self.answer
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
-        self.question = str(self.num1) + " / "+str(self.num2)+" = ?"
+        self.question = str(self.num2) + " / "+str(self.num1)+" = ?"
         self.answerList = self._pickRandomSolutions(int(self.answer))
         return self.question, int(self.answer), self.answerList
 
