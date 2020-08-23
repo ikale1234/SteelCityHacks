@@ -8,7 +8,7 @@ class Label:
         self.font = pygame.font.SysFont('arial', size)
         self.color = color
         self.width, self.height = self.font.size(self.text)
-        self.bg_color = bg_color
+        self.bg_color = None
         self.label = self.font.render(self.text, True, color, self.bg_color)
         self.rect = self.label.get_rect()
         self.x = x
