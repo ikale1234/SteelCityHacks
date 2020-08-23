@@ -16,6 +16,23 @@ class math():
         self.answer = ""
         self.answerList = []
 
+    def _pickRandomSolutions(self, answer):
+        self.goUp = random.randrange(10)
+        self.goDown = 9 - self.goUp
+        self.tempAnswerList = []
+        if answer - 10 < 0:
+            self.goDown = answer
+            self.goUp = 9 - self.goDown
+        for i in range(self.goUp):
+            self.tempAnswerList.append(answer+1+i)
+        for i in range(self.goDown):
+            self.tempAnswerList.append(answer-1-i)
+        self.finalFive = []
+        self.finalFive.append(answer)
+        self.finalFive = self.finalFive + \
+            random.sample(self.tempAnswerList, k=4)
+        return self.finalFive
+
     def _addition1(self):
         self.answerList = []
         self.num1 = random.randrange(10)
@@ -28,11 +45,7 @@ class math():
         self.answerList.append(self.answer)
         self.question = "what is " + \
             str(self.num1) + " + "+str(self.num2)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(21)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(21)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _addition2(self):
@@ -47,11 +60,7 @@ class math():
         self.answerList.append(self.answer)
         self.question = "what is " + \
             str(self.num1) + " + "+str(self.num2)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(21)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(21)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _addition3(self):
@@ -66,11 +75,7 @@ class math():
         self.answerList.append(self.answer)
         self.question = "what is " + \
             str(self.num1) + " + "+str(self.num2)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(21)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(21)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _addition4(self):
@@ -85,11 +90,7 @@ class math():
         self.answerList.append(self.answer)
         self.question = "what is " + \
             str(self.num1) + " + "+str(self.num2)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(21)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(21)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def addition(self, difficulty):
@@ -111,11 +112,7 @@ class math():
         self.question = "what is " + str(self.num1) + " * "+str(self.num2)+"?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _multiplication2(self):
@@ -126,11 +123,7 @@ class math():
         self.question = "what is " + str(self.num1) + " * "+str(self.num2)+"?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _multiplication3(self):
@@ -141,11 +134,7 @@ class math():
         self.question = "what is " + str(self.num1) + " * "+str(self.num2)+"?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _multiplication4(self):
@@ -156,11 +145,7 @@ class math():
         self.question = "what is " + str(self.num1) + " * "+str(self.num2)+"?"
         self.answer = self.num1*self.num2
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def multiplication(self, difficulty):
@@ -187,11 +172,7 @@ class math():
             self.question = "what is " + \
                 str(self.num2) + " - "+str(self.num1)+"?"
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(11)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(11)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _subtraction2(self):
@@ -207,11 +188,7 @@ class math():
                 str(self.num2) + " - "+str(self.num1)+"?"
             self.answer = self.num2 - self.num1
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(11)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(11)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _subtraction3(self):
@@ -231,11 +208,7 @@ class math():
             self.question = "what is " + \
                 str(self.num2) + " - "+str(self.num1)+"?"
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(11)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(11)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def _subtraction4(self):
@@ -257,11 +230,7 @@ class math():
             self.question = "what is " + \
                 str(self.num2) + " - "+str(self.num1)+"?"
         self.answerList.append(self.answer)
-        for i in range(5):
-            fakeAnswer = random.randrange(11)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(11)
-            self.answerList.append(fakeAnswer)
+        self.answerList = self._pickRandomSolutions(self.answer)
         return self.question, self.answer, self.answerList
 
     def subtraction(self, difficulty):
@@ -285,12 +254,8 @@ class math():
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
         self.question = "what is " + str(self.num2) + " / "+str(self.num1)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
+        self.answerList = self._pickRandomSolutions(int(self.answer))
+        return self.question, int(self.answer), self.answerList
 
     def _division2(self):
         divideBy = [2, 5, 11]
@@ -302,12 +267,8 @@ class math():
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
         self.question = "what is " + str(self.num2) + " / "+str(self.num1)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
+        self.answerList = self._pickRandomSolutions(int(self.answer))
+        return self.question, int(self.answer), self.answerList
 
     def _division3(self):
         divideBy = [3, 4, 6, 7]
@@ -319,12 +280,8 @@ class math():
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
         self.question = "what is " + str(self.num2) + " / "+str(self.num1)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
+        self.answerList = self._pickRandomSolutions(int(self.answer))
+        return self.question, int(self.answer), self.answerList
 
     def _division4(self):
         divideBy = [8, 9, 12]
@@ -336,12 +293,8 @@ class math():
         self.answer = self.num2/self.num1
         self.answerList.append(self.answer)
         self.question = "what is " + str(self.num2) + " / "+str(self.num1)+"?"
-        for i in range(5):
-            fakeAnswer = random.randrange(100)
-            while fakeAnswer in self.answerList:
-                fakeAnswer = random.randrange(100)
-            self.answerList.append(fakeAnswer)
-        return self.question, self.answer, self.answerList
+        self.answerList = self._pickRandomSolutions(int(self.answer))
+        return self.question, int(self.answer), self.answerList
 
     def division(self, difficulty):
         if difficulty == 1:
@@ -358,8 +311,9 @@ class math():
 font1 = pygame.font.SysFont("comicsans", 80, True)
 
 run = math()
-question = run.division(4)
+question = run.subtraction(4)
 # print(question)
+run._pickRandomSolutions(15)
 while run:
     win.fill((0, 0, 0))
 
@@ -368,7 +322,7 @@ while run:
             run = False
 
     if event.type == pygame.MOUSEBUTTONDOWN:
-        question = run.division(4)
+        question = run.subtraction(4)
         # print(question)
     text = font1.render(question[0], 1, (235, 0, 0))
     win.blit(text, (500 - text.get_width()/2, 500))
