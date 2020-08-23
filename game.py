@@ -58,6 +58,8 @@ class Game:
         self.circlemove = False
         self.circlesteps = 0
         self.new_question = False
+        self.wrongsound = pygame.mixer.Sound("wrong.wav")
+        self.rightsound = pygame.mixer.Sound("correct.wav")
 
     def drawgame(self):
         if self.stage == "start":
@@ -89,6 +91,18 @@ class Game:
         self.timer_label = Label("Time Left: " + str(int(30)), 25, (0, 0, 0),
                                  (255, 255, 255), width*0.1, 25)
 
+    def startgame(self, mode):
+        self.mode = mode
+        self.question, self.answer, self.answerList = self.math.get_question(
+            self.mode)
+        self.qlabel = Label(self.question, 30, (0, 0, 0),
+                            (255, 255, 255), width/2, 25)
+        for i in range(len(self.circlelist)):
+            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
+                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
+        self.stage = "game"
+        self.set_timer()
+
     def rungame(self):
         while self.run:
             win.fill(self.bg_color)
@@ -118,53 +132,15 @@ class Game:
                 if pygame.mouse.get_pressed() == (1, 0, 0) and self.mousenotpressed:
                     self.mousenotpressed = False
                     if self.add_label.in_rect:
+                        self.startgame("addition")
 
-                        self.mode = "addition"
-                        self.question, self.answer, self.answerList = self.math.get_question(
-                            self.mode)
-                        self.qlabel = Label(self.question, 30, (0, 0, 0),
-                                            (255, 255, 255), width/2, 25)
-                        for i in range(len(self.circlelist)):
-                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
-                        self.stage = "game"
-                        self.set_timer()
                     if self.subtract_label.in_rect:
-
-                        self.mode = "subtraction"
-                        self.question, self.answer, self.answerList = self.math.get_question(
-                            self.mode)
-                        self.qlabel = Label(self.question, 30, (0, 0, 0),
-                                            (255, 255, 255), width/2, 25)
-                        for i in range(len(self.circlelist)):
-                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
-                        self.stage = "game"
-                        self.set_timer()
+                        self.startgame("subtraction")
                     if self.multiply_label.in_rect:
-
-                        self.mode = "multiplication"
-                        self.question, self.answer, self.answerList = self.math.get_question(
-                            self.mode)
-                        self.qlabel = Label(self.question, 30, (0, 0, 0),
-                                            (255, 255, 255), width/2, 25)
-                        for i in range(len(self.circlelist)):
-                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
-                        self.stage = "game"
-                        self.set_timer()
+                        self.startgame("multiplication")
                     if self.divide_label.in_rect:
 
-                        self.mode = "division"
-                        self.question, self.answer, self.answerList = self.math.get_question(
-                            self.mode)
-                        self.qlabel = Label(self.question, 30, (0, 0, 0),
-                                            (255, 255, 255), width/2, 25)
-                        for i in range(len(self.circlelist)):
-                            self.answerLabels.append(Label(str(self.answerList[i]), 25, (0, 0, 0), (
-                                23, 230, 216), self.circlelist[i].x, self.circlelist[i].y))
-                        self.stage = "game"
-                        self.set_timer()
+                        self.startgame("division")
                 elif pygame.mouse.get_pressed() == (1, 0, 0):
                     self.mousenotpressed = False
                 self.add_label.checkcursor(self.x, self.y, (128, 128, 128))
@@ -199,6 +175,7 @@ class Game:
                                 self.circlelist[i].changecolor((0, 255, 0))
                                 self.answerLabels[i] = Label(str(self.answerList[i]), 25, (0, 0, 0), (
                                     0, 255, 0), self.circlelist[i].x, self.circlelist[i].y)
+                                self.rightsound.play()
 
                             else:
                                 self.points -= 1
@@ -208,6 +185,7 @@ class Game:
                                 self.circlelist[0].changecolor((0, 255, 0))
                                 self.answerLabels[0] = Label(str(self.answerList[0]), 25, (0, 0, 0), (
                                     0, 255, 0), self.circlelist[0].x, self.circlelist[0].y)
+                                self.wrongsound.play()
                             self.allcircles.changepos(self.circlelist)
                             self.circlemove = True
 
